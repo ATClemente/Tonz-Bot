@@ -1,0 +1,29 @@
+{
+	"commands": 
+			[
+				{
+					"name": "ping",
+					"description": "pong!"
+				},
+				{
+					"name": "Hello!",
+					"description": "I say hello back!"
+				},
+				{
+					"name": "Doom",
+					"description": "Feel your doom"
+				},
+				{
+					"name": "Delete",
+					"description": "Just delete the message. Kinda useless actually."
+				},
+				{
+					"name": "Random",
+					"description": "Get a random user"
+				},
+				{
+					"name": "Commands",
+					"description": "I mean, c'mon"
+				}
+			]
+}
