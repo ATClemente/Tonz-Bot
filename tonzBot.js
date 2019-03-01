@@ -1,3 +1,8 @@
+/* A discord bot for me and friends
+ * Author: Anthony Clemente
+ * 2019
+ * */
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -14,13 +19,13 @@ client.on('message', message => {
 	message.delete();
 	message.reply('Why the /tts though?');
 }*/
-
+	
 
 if (message.content.substring(0, 1) == '!') {
 	
 	
 	var args = message.content.substring(1).split(' ');
-	var cmd = args[0];
+	var cmd = args[0].toLowerCase();
 
 	args = args.splice(1);
 	switch(cmd) {
@@ -44,9 +49,15 @@ if (message.content.substring(0, 1) == '!') {
 			//console.log(client.users.random().username);
 		break;
 		case commandsList[5].name:
-			message.channel.send(commandList());
-			//console.log(client.users.random().username);
+			//Show what people are playing
+			showPlayingInfo(message.channel)
 		break;
+		case commandsList[6].name:
+			//Show what people are streaming
+			showStreamingInfo(message.channel)
+		break;
+		case "commands":
+			message.channel.send(commandList());
 		// Just add any case commands if you want to..
 		}
 	}
@@ -76,8 +87,6 @@ client.on('guildMemberSpeaking', (member, speaking) => {
 
 function setBotVolume(){
 	
-	console.log(client.users);
-	
 }
 
 function commandList(){
@@ -89,6 +98,35 @@ function commandList(){
 	
 	return output;	
 }
+
+function showPlayingInfo(channel){
+	let totalPlayers = 0;
+	var messageToSend = "";
+	client.users.forEach(function(user){
+		if(user.presence.game){
+			console.log(user.presence.game);
+			totalPlayers++;
+			messageToSend += "\n"
+			messageToSend += user.username;
+			messageToSend += " is playing: ";
+			messageToSend += user.presence.game.name;
+			messageToSend += "\n"
+		}
+	});
+	if (totalPlayers > 0 && messageToSend !== ""){
+		channel.send(messageToSend);
+	}
+}
+
+function showStreamingInfo(channel){
+	channel.send("Not yet implemented");
+}
+
+client.on('guildMemberAdd', member => {
+	const channel = member.guild.channels.find(ch => ch.name === 'member-log');
+	if(!channel) return;
+	channel.send(`Welcome to the server, ${member}`);
+});
 
 
 //console.log(commandsList[0].name);

@@ -6,23 +6,31 @@
 					"description": "pong!"
 				},
 				{
-					"name": "Hello!",
+					"name": "hello!",
 					"description": "I say hello back!"
 				},
 				{
-					"name": "Doom",
+					"name": "doom",
 					"description": "Feel your doom"
 				},
 				{
-					"name": "Delete",
+					"name": "delete",
 					"description": "Just delete the message. Kinda useless actually."
 				},
 				{
-					"name": "Random",
+					"name": "random",
 					"description": "Get a random user"
 				},
 				{
-					"name": "Commands",
+					"name": "playing",
+					"description": "See what people are playing"
+				},
+				{
+					"name": "streaming",
+					"description": "See what people are streaming"
+				},
+				{
+					"name": "commands",
 					"description": "I mean, c'mon"
 				}
 			]
