@@ -14,53 +14,51 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-
-/*if(message.tts){
-	message.delete();
-	message.reply('Why the /tts though?');
-}*/
 	
-
-if (message.content.substring(0, 1) == '!') {
-	
-	
-	var args = message.content.substring(1).split(' ');
-	var cmd = args[0].toLowerCase();
-
-	args = args.splice(1);
-	switch(cmd) {
-		// !ping
-		case commandsList[0].name:
-			message.reply('Pong!');
-		break;
-		case commandsList[1].name:
-			message.reply('Hi there kind humans!');
-		break;
-		case commandsList[2].name:
-			message.channel.send('<:doom:508093498537410560>');
-		break;
-		case commandsList[3].name:
-			message.delete()
-				.then(message => console.log(`Deleted message from ${message.author.username}`))
-				.catch(console.error);
-		break;
-		case commandsList[4].name:
-			message.channel.send(client.users.random().username);
-			//console.log(client.users.random().username);
-		break;
-		case commandsList[5].name:
-			//Show what people are playing
-			showPlayingInfo(message.channel)
-		break;
-		case commandsList[6].name:
-			//Show what people are streaming
-			showStreamingInfo(message.channel)
-		break;
-		case "commands":
-			message.channel.send(commandList());
-		// Just add any case commands if you want to..
-		}
+	if(message.author.bot){
+		return;
 	}
+
+	if (message.content.substring(0, 1) == '!') {
+		
+		
+		var args = message.content.substring(1).split(' ');
+		var cmd = args[0].toLowerCase();
+
+		args = args.splice(1);
+		switch(cmd) {
+			// !ping
+			case commandsList[0].name:
+				message.reply('Pong!');
+			break;
+			case commandsList[1].name:
+				message.reply('Hi there kind humans!');
+			break;
+			case commandsList[2].name:
+				message.channel.send('<:doom:508093498537410560>');
+			break;
+			case commandsList[3].name:
+				message.delete()
+					.then(message => console.log(`Deleted message from ${message.author.username}`))
+					.catch(console.error);
+			break;
+			case commandsList[4].name:
+				message.channel.send(client.users.random().username);
+				//console.log(client.users.random().username);
+			break;
+			case commandsList[5].name:
+				//Show what people are playing
+				showPlayingInfo(message.channel)
+			break;
+			case commandsList[6].name:
+				//Show what people are streaming
+				showStreamingInfo(message.channel)
+			break;
+			case "commands":
+				message.channel.send(commandList());
+			// Just add any case commands if you want to..
+			}
+		}
 });
 
 
@@ -116,10 +114,34 @@ function showPlayingInfo(channel){
 	if (totalPlayers > 0 && messageToSend !== ""){
 		channel.send(messageToSend);
 	}
+	else{
+		channel.send("Nobody is playing anything!");
+	}
 }
 
 function showStreamingInfo(channel){
-	channel.send("Not yet implemented");
+
+	let totalPlayers = 0;
+	var messageToSend = "";
+	client.users.forEach(function(user){
+		if(user.presence.game && user.presence.game.streaming){
+			totalPlayers++;
+			messageToSend += "\n";
+			messageToSend += user.username;
+			messageToSend += " is streaming: ";
+			messageToSend += user.presence.game.name;
+			messageToSend += "\n";
+			messageToSend += "Watch it here: ";
+			messageToSend += user.presence.game.url;
+			messageToSend += "\n";
+		}
+	});
+	if (totalPlayers > 0 && messageToSend !== ""){
+		channel.send(messageToSend);
+	}
+	else{
+		channel.send("Nobody is streaming anything!");
+	}
 }
 
 client.on('guildMemberAdd', member => {
