@@ -54,6 +54,10 @@ client.on('message', message => {
 				//Show what people are streaming
 				showStreamingInfo(message.channel)
 			break;
+			case commandsList[7].name:
+				message.channel.send(CABAL_TEXT);
+				message.channel.send('<:zavvy:508103287690756096>');
+			break;
 			case "commands":
 				message.channel.send(commandList());
 			// Just add any case commands if you want to..
@@ -61,6 +65,11 @@ client.on('message', message => {
 		}
 });
 
+const CABAL_TEXT = "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's " +
+	           "get to taking out their command, one by one. Valus Ta'aurc. From what I can gather, he commands " +
+		   "the Siege Dancers from an Imperial Land Tank just outside of Rubicon. He's well protected, but " +
+		   "with the right team, we can punch through those defenses, take this beast out, and break their " +
+		   "grip on Freehold."
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	//console.log("Voice state changed");

@@ -30,6 +30,10 @@
 					"description": "See what people are streaming"
 				},
 				{
+					"name": "cabal",
+					"description": "Zavala"
+				},
+				{
 					"name": "commands",
 					"description": "I mean, c'mon"
 				}
