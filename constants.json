@@ -34,6 +34,10 @@
 					"description": "Zavala"
 				},
 				{
+					"name": "card",
+					"description": "Get a random card"
+				},
+				{
 					"name": "commands",
 					"description": "I mean, c'mon"
 				}

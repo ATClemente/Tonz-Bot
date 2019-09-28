@@ -9,11 +9,15 @@ const client = new Discord.Client();
 var auth = require('./auth.json');
 var commandsList = require('./constants.json').commands;
 
+const axios = require('axios');
+
+let serverDeckId = null;
+
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	
 	if(message.author.bot){
 		return;
@@ -58,6 +62,10 @@ client.on('message', message => {
 				message.channel.send(CABAL_TEXT);
 				message.channel.send('<:zavvy:508103287690756096>');
 			break;
+			case commandsList[8].name: //card
+				let imageLink = await drawCard(serverDeckId);
+				message.channel.send({files: [imageLink]});
+				break;
 			case "commands":
 				message.channel.send(commandList());
 			// Just add any case commands if you want to..
@@ -92,8 +100,30 @@ client.on('guildMemberSpeaking', (member, speaking) => {
 	}
 });
 
-function setBotVolume(){
-	
+async function drawCard(deckId) {
+	if(deckId === null){
+        deckId = "new";
+	}
+	try{
+    const { data } = await axios({
+            method: 'get',
+            url: 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=1',
+		});
+		
+		if(data.success){
+			serverDeckId = data.deck_id
+			if(data.remaining === 0){
+				serverDeckId = null;
+			}
+			return data.cards[0].image;
+		}
+    }
+    catch(e){
+		console.log(e.response.status);
+		console.log(e.response.data);
+
+		return null;
+    }
 }
 
 function commandList(){
@@ -160,8 +190,5 @@ client.on('guildMemberAdd', member => {
 });
 
 
-//console.log(commandsList[0].name);
-//console.log(commandList());
 
 client.login(auth.token);
-setBotVolume();
